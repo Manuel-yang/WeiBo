@@ -1,5 +1,6 @@
 from lxml import etree
 import requests
+import json
 
 # tree = etree.parse()
 
@@ -30,12 +31,13 @@ def search():
         temp = {}
         temp['title'] = contentR[i]
         temp['link'] = "https://tophub.today"+linkR[i]
+        temp = json.dumps(temp)
         data.append(temp)
-    return data
+
 
 if __name__ == "__main__":
     result = search()
-    print(result)
+
 
 from lxml import etree
 import requests
@@ -66,13 +68,15 @@ def search():
     count = 1
     data = []
     for i in range(0,len(contentR)):
-        temp = {}
-        temp['title'] = contentR[i]
-        temp['link'] = "https://tophub.today"+linkR[i]
-        data.append(temp)
-    return data
+        # temp = {}
+        # temp[title] = contentR[i]
+        # temp[link] = "https://tophub.today"+linkR[i]
+        temp = dict(rank = i+1,title=contentR[i], link="https://tophub.today"+linkR[i])
+        temp = json.dumps(temp, ensure_ascii=False)
+        print(temp)
+
 
 if __name__ == "__main__":
     result = search()
-    print(result)
+
 

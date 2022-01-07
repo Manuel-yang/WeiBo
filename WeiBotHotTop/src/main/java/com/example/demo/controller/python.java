@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.implement.InvPython;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class python {
-    @GetMapping("/python")
-    public String getList() {
+
+    @CrossOrigin
+    @GetMapping("python")
+    public Object getList() {
         InvPython invPython = new InvPython();
         return invPython.getList();
     }

@@ -1,16 +1,12 @@
 package com.example.demo.implement;
-
+import org.json.JSONArray;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author YanAemons
@@ -19,7 +15,7 @@ import java.io.LineNumberReader;
 @Component
 public class InvPython implements com.example.demo.service.InvPython {
 
-    private String pythonFilePath = "C:\\Users\\Gasshow\\Desktop\\test\\WeiBotHotTop\\src\\main\\java\\com\\example\\demo\\controller\\WeiBoHotTop.py";
+    private String pythonFilePath = "C:\\Users\\Gasshow\\Desktop\\weibo\\WeiBotHotTop\\src\\main\\java\\com\\example\\demo\\controller\\WeiBoHotTop.py";
 
     @Override
     public String getList() {
@@ -30,15 +26,18 @@ public class InvPython implements com.example.demo.service.InvPython {
 //            process.waitFor();
             InputStreamReader ir = new InputStreamReader(process.getInputStream(),"gbk");
             LineNumberReader input = new LineNumberReader(ir);
-            result = input.readLine();
-            System.out.println(result);
+            String line;
+            List<String> list = new ArrayList<>();
+            while ((line = input.readLine()) != null) {
+                list.add(line);
+            }
+            JSONArray jsonArray=new JSONArray(list);
             input.close();
             ir.close();
-
-            return result;
+            return jsonArray.toString();
         }catch (IOException e) {
             e.printStackTrace();
-            return "Wrong";
+            return null;
         }
     }
 }
